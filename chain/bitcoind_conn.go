@@ -145,6 +145,7 @@ func NewBitcoindConn(cfg *BitcoindConfig) (*BitcoindConn, error) {
 		DisableConnectOnNew:  true,
 		DisableTLS:           true,
 		HTTPPostMode:         true,
+		Params:               cfg.ChainParams.Name,
 	}
 	client, err := rpcclient.New(clientCfg, nil)
 	if err != nil {
@@ -385,6 +386,8 @@ func getCurrentNet(client *rpcclient.Client) (wire.BitcoinNet, error) {
 	switch *hash {
 	case *chaincfg.TestNet3Params.GenesisHash:
 		return chaincfg.TestNet3Params.Net, nil
+	case *chaincfg.TestNet4Params.GenesisHash:
+		return chaincfg.TestNet4Params.Net, nil
 	case *chaincfg.RegressionNetParams.GenesisHash:
 		return chaincfg.RegressionNetParams.Net, nil
 	case *chaincfg.SigNetParams.GenesisHash:
